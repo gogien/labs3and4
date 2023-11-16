@@ -27,16 +27,13 @@ def hod(a, b):
         list_hod.append(list2)
 
 list_hod = []
-def back_hod(list_hod):
-        print('На сколько ходов вы хотите вернуться назад?')
-        c = int(input())
+def back_hod(c, list_hod):
         for i in range(1, c+1):
             x1 = list_hod[-i][0]
             y1 = list_hod[-i][1]
             x2 = list_hod[-i][2]
             y2 = list_hod[-i][3]
             deck[x1][y1], deck[x2][y2] = deck[x2][y2], deck[x1][y1]
-        count-=c
         for d in deck:
             print(*d)
 
@@ -48,7 +45,10 @@ while True:
                 print(count)
                 break
         elif a == 'вернуться назад':
+                print('На сколько ходов вы хотите вернуться назад?')
+                c = int(input())
                 back_hod(list_hod)
+                count-=c
         else:
                 print('Введите позицию для перемещения фигуры')
                 b = str(input())
