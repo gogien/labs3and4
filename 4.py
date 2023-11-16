@@ -21,8 +21,25 @@ def hod(a, b):
         if deck[x2][y2]!='.':
                 deck[x2][y2]='.'
         deck[x1][y1], deck[x2][y2] = deck[x2][y2], deck[x1][y1]
-        for x in deck:
-                print(*x)
+        for d in deck:
+                print(*d)
+        list2 = [x1, y1, x2, y2]
+        list_hod.append(list2)
+
+list_hod = []
+def back_hod(list_hod):
+        print('На сколько ходов вы хотите вернуться назад?')
+        c = int(input())
+        for i in range(1, c+1):
+            x1 = list_hod[-i][0]
+            y1 = list_hod[-i][1]
+            x2 = list_hod[-i][2]
+            y2 = list_hod[-i][3]
+            deck[x1][y1], deck[x2][y2] = deck[x2][y2], deck[x1][y1]
+        count-=c
+        for d in deck:
+            print(*d)
+
 count = 0
 while True:
         print('Введите позицию фигуры, которой будет сделан ход')
@@ -30,7 +47,10 @@ while True:
         if a=='мат' or a=='ничья':
                 print(count)
                 break
-        print('Введите позицию для перемещения фигуры')
-        b = str(input())
-        hod(a, b)
-        count+=1
+        elif a == 'вернуться назад':
+                back_hod(list_hod)
+        else:
+                print('Введите позицию для перемещения фигуры')
+                b = str(input())
+                hod(a, b)
+                count+=1
