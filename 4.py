@@ -23,9 +23,14 @@ def hod(a, b):
         deck[x1][y1], deck[x2][y2] = deck[x2][y2], deck[x1][y1]
         for x in deck:
                 print(*x)
+count = 0
 while True:
+        print('Введите позицию фигуры, которой будет сделан ход')
         a = str(input())
         if a=='мат' or a=='ничья':
+                print(count)
                 break
+        print('Введите позицию для перемещения фигуры')
         b = str(input())
         hod(a, b)
+        count+=1
