@@ -47,7 +47,7 @@ while True:
         elif a == 'вернуться назад':
                 print('На сколько ходов вы хотите вернуться назад?')
                 c = int(input())
-                back_hod(list_hod)
+                back_hod(c, list_hod)
                 count-=c
         else:
                 print('Введите позицию для перемещения фигуры')
