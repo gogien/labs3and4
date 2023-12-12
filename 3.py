@@ -1,5 +1,6 @@
 import csv
 import pickle
+import copy
 
 
 class TableOperations:
@@ -216,6 +217,60 @@ class TableOperations:
                 else:
                     print('|'.join(list(map(str, self.table[i]))))
 
+    def eq(self, column1, column2):
+        if not isinstance(self.table, list):
+            raise TypeError("table must be a list")
+        if self.get_column_type(column1) not in [int, bool, float] or self.get_column_type(column2) not in [int, bool, float]:
+            raise TypeError("column1 and column2 must be int")
+        return [row[column1] == row[column2] for row in self.table]
+
+    def gr(self, column1, column2):
+        if not isinstance(self.table, list):
+            raise TypeError("table must be a list")
+        if self.get_column_type(column1) not in [int, bool, float] or self.get_column_type(column2) not in [int, bool, float]:
+            raise TypeError("column1 and column2 must be int")
+        return [row[column1] > row[column2] for row in self.table]
+
+    def ls(self, column1, column2):
+        if not isinstance(self.table, list):
+            raise TypeError("table must be a list")
+        if self.get_column_type(column1) not in [int, bool, float] or self.get_column_type(column2) not in [int, bool, float]:
+            raise TypeError("column1 and column2 must be int, bool, float")
+        return [row[column1] < row[column2] for row in self.table]
+
+    def ge(self, column1, column2):
+        if not isinstance(self.table, list):
+            raise TypeError("table must be a list")
+        if self.get_column_type(column1) not in [int, bool, float] or self.get_column_type(column2) not in [int, bool, float]:
+            raise TypeError("column1 and column2 must be int, bool, float")
+        return [row[column1] >= row[column2] for row in self.table]
+
+    def le(self, column1, column2):
+        if not isinstance(self.table, list):
+            raise TypeError("table must be a list")
+        if self.get_column_type(column1) not in [int, bool, float] or self.get_column_type(column2) not in [int, bool, float]:
+            raise TypeError("column1 and column2 must be int, bool, float")
+        return [row[column1] <= row[column2] for row in self.table]
+
+    def ne(self, column1, column2):
+        if not isinstance(self.table, list):
+            raise TypeError("table must be a list")
+        if not isinstance(column1, int) or not isinstance(column2, int):
+            raise TypeError("column1 and column2 must be int, bool, float")
+        return [row[column1] != row[column2] for row in self.table]
+
+    def filter_rows(self, bool_list, copy_table=False):
+        if not isinstance(bool_list, list):
+            raise TypeError
+        if len(bool_list) != len(self.table):
+            raise ValueError
+        if copy_table:
+            new_table = copy.deepcopy(self.table)
+        else:
+            new_table = self.table
+        new_table = [row for row, is_included in zip(new_table, bool_list) if is_included]
+        return new_table
+
 
 class TableCsv(TableOperations):
 
@@ -272,6 +327,6 @@ data.set_column_type(3, int)
 data.print_table()
 print()
 print(data.get_column_types())
-data.mul(0, 1, 2, 3)
+print(data.ge(1,0))
 data.print_table()
 TableCsv.save_table(data.table, 'test2.csv')
